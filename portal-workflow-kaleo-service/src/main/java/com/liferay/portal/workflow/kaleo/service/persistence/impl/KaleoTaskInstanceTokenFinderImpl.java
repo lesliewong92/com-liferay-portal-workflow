@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
@@ -552,8 +553,8 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
 				mapRoleIdGroupId(
-					userGroupRole.getRoleId(), userGroupRole.getGroupId(),
-					roleIdGroupIdsMap);
+					userGroupRole.getCompanyId(), userGroupRole.getRoleId(),
+					userGroupRole.getGroupId(), roleIdGroupIdsMap);
 			}
 
 			List<UserGroupGroupRole> userGroupGroupRoles =
@@ -561,6 +562,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 			for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
 				mapRoleIdGroupId(
+					userGroupGroupRole.getCompanyId(),
 					userGroupGroupRole.getRoleId(),
 					userGroupGroupRole.getGroupId(), roleIdGroupIdsMap);
 			}
@@ -712,7 +714,8 @@ public class KaleoTaskInstanceTokenFinderImpl
 	}
 
 	protected void mapRoleIdGroupId(
-		long roleId, long groupId, Map<Long, Set<Long>> roleIdGroupIdsMap) {
+		long companyId, long roleId, long groupId,
+		Map<Long, Set<Long>> roleIdGroupIdsMap) {
 
 		Set<Long> groupIds = roleIdGroupIdsMap.get(roleId);
 
@@ -723,6 +726,31 @@ public class KaleoTaskInstanceTokenFinderImpl
 		}
 
 		groupIds.add(groupId);
+
+		Role role = RoleLocalServiceUtil.fetchRole(roleId);
+
+		if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+			populateChildrenGroupIds(groupIds, companyId, groupId);
+		}
+	}
+
+	protected void populateChildrenGroupIds(
+		Set<Long> groupIds, long companyId, long groupId) {
+
+		List<Group> childrenGroups = GroupLocalServiceUtil.getGroups(
+			companyId, groupId, true);
+
+		if (childrenGroups == null) {
+			return;
+		}
+
+		for (Group childrenGroup : childrenGroups) {
+			long childrenGroupId = childrenGroup.getGroupId();
+
+			groupIds.add(childrenGroupId);
+
+			populateChildrenGroupIds(groupIds, companyId, childrenGroupId);
+		}
 	}
 
 	protected void setAssetPrimaryKey(
