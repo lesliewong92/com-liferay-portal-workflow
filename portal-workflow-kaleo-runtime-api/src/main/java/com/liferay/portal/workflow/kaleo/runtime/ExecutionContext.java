@@ -32,7 +32,8 @@ public class ExecutionContext implements Serializable {
 	public ExecutionContext(
 		KaleoInstanceToken kaleoInstanceToken,
 		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		Map<String, Serializable> workflowContext) {
+		Map<String, Serializable> workflowContext,
+		ServiceContext serviceContext) {
 
 		this(kaleoInstanceToken, workflowContext, serviceContext);
 
