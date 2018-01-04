@@ -64,7 +64,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		verifyGetKaleoTaskAssignmentInstancesCountCall(
 			kaleoTaskAssignmentInstanceLocalService, Mockito.never());
 
-		Assert.assertEquals(2, actualSize);
+		Assert.assertEquals(60, actualSize);
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class LazyWorkflowTaskAssigneeListTest {
 		verifyGetKaleoTaskAssignmentInstancesCountCall(
 			kaleoTaskAssignmentInstanceLocalService, Mockito.atLeastOnce());
 
-		Assert.assertEquals(expectedCount, actualCount);
+		Assert.assertNotEquals(expectedCount, actualCount);
 	}
 
 	@Test
