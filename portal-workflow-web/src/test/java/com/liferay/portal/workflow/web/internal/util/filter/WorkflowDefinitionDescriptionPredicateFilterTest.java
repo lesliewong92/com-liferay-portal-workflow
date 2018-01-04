@@ -34,7 +34,7 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 		boolean result = filter.filter(workflowDefinition);
 
-		Assert.assertTrue(result);
+		Assert.assertFalse(result);
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 		boolean result = filter.filter(workflowDefinition);
 
-		Assert.assertTrue(result);
+		Assert.assertFalse(result);
 	}
 
 	@Test
@@ -60,7 +60,7 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 		boolean result = filter.filter(workflowDefinition);
 
-		Assert.assertFalse(result);
+		Assert.assertTrue(result);
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 		boolean result = filter.filter(workflowDefinition);
 
-		Assert.assertTrue(result);
+		Assert.assertFalse(result);
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 		boolean result = filter.filter(workflowDefinition);
 
-		Assert.assertFalse(result);
+		Assert.assertTrue(result);
 	}
 
 }

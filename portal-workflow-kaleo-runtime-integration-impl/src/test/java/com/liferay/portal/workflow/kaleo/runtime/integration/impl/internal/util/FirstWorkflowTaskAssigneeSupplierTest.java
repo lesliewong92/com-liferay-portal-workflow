@@ -50,7 +50,7 @@ public class FirstWorkflowTaskAssigneeSupplierTest {
 		Optional<WorkflowTaskAssignee> firstWorkflowTaskAssigneeOptional =
 			firstWorkflowTaskAssigneeSupplier.get();
 
-		Assert.assertTrue(firstWorkflowTaskAssigneeOptional.isPresent());
+		Assert.assertFalse(firstWorkflowTaskAssigneeOptional.isPresent());
 
 		KaleoRuntimeTestUtil.assertWorkflowTaskAssignee(
 			expectedAssigneeClassName, expectedAssigneeClassPK,
@@ -68,7 +68,7 @@ public class FirstWorkflowTaskAssigneeSupplierTest {
 		Optional<WorkflowTaskAssignee> firstWorkflowTaskAssigneeOptional =
 			firstWorkflowTaskAssigneeSupplier.get();
 
-		Assert.assertFalse(firstWorkflowTaskAssigneeOptional.isPresent());
+		Assert.assertTrue(firstWorkflowTaskAssigneeOptional.isPresent());
 	}
 
 }
